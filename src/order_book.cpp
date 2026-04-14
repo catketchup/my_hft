@@ -48,8 +48,44 @@ std::pair<Order, Order> SimpleMarketMaker::generate_quotes(const MarketDataHandl
     double inside_amount = spread * inside_pct_;
     
     // Buy above best bid, sell below best ask
-    Order buy_order{order_id++, best_bid + inside_amount / 2, quantity_, true};
-    Order sell_order{order_id++, best_ask - inside_amount / 2, quantity_, false};
+    // For simple case, fill_price = quote_price and filled_qty = quantity
+    Order buy_order{order_id++, best_bid + inside_amount / 2, 0, quantity_, quantity_, true};
+    buy_order.fill_price = buy_order.price;
+    Order sell_order{order_id++, best_ask - inside_amount / 2, 0, quantity_, quantity_, false};
+    sell_order.fill_price = sell_order.price;
+
+    return {buy_order, sell_order};
+}
+
+std::pair<Order, Order> SimpleMarketMaker::generate_quotes_with_slippage(
+    const MarketDataHandler& market, 
+    double slippage_bps
+) {
+    static uint64_t order_id = 1;
+    
+    double best_bid = market.get_best_bid();
+    double best_ask = market.get_best_ask();
+    double spread = market.get_spread();
+    
+    // Slippage factor: convert bps to decimal (1 bps = 0.01%)
+    // e.g., slippage_bps=5 means 0.05% adverse move
+    double slippage_decimal = slippage_bps / 10000.0;
+    double slippage_amount = best_ask * slippage_decimal;  // Slippage in dollars
+
+    // Quote prices (what we post)
+    double inside_amount = spread * inside_pct_;
+    double buy_quote = best_bid + inside_amount / 2;
+    double sell_quote = best_ask - inside_amount / 2;
+
+    // Fill prices (what we actually get)
+    // For buy orders: slippage makes us pay MORE (adverse)
+    // For sell orders: slippage makes us receive LESS (adverse)
+    double buy_fill = buy_quote + slippage_amount;
+    double sell_fill = sell_quote - slippage_amount;
+
+    // Create orders with slippage
+    Order buy_order{order_id++, buy_quote, buy_fill, quantity_, quantity_, true};
+    Order sell_order{order_id++, sell_quote, sell_fill, quantity_, quantity_, false};
 
     return {buy_order, sell_order};
 }

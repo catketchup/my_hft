@@ -54,10 +54,10 @@ RM = /home/hongbo/tools/anaconda3/lib/python3.12/site-packages/cmake/data/bin/cm
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hongbo/projects/my_Cpp
+CMAKE_SOURCE_DIR = /home/hongbo/projects/my_hft
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hongbo/projects/my_Cpp/build
+CMAKE_BINARY_DIR = /home/hongbo/projects/my_hft/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -85,14 +85,14 @@ clean: CMakeFiles/hft_core.dir/clean
 CMakeFiles/hft_core.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hft_core.dir/build.make CMakeFiles/hft_core.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hft_core.dir/build.make CMakeFiles/hft_core.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/hongbo/projects/my_Cpp/build/CMakeFiles --progress-num=1,2,3 "Built target hft_core"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/hongbo/projects/my_hft/build/CMakeFiles --progress-num=1,2,3 "Built target hft_core"
 .PHONY : CMakeFiles/hft_core.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/hft_core.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_Cpp/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_hft/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/hft_core.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_Cpp/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_hft/build/CMakeFiles 0
 .PHONY : CMakeFiles/hft_core.dir/rule
 
 # Convenience name for target.

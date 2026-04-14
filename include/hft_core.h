@@ -6,10 +6,12 @@
 // Represents a single order in the market
 // In real HFT systems, this would also include timestamp, exchange info, etc.
 struct Order {
-    uint64_t id;      // Unique order identifier
-    double price;     // Order price level
-    int quantity;     // Number of contracts/shares
-    bool is_buy;      // true = buy order, false = sell order
+    uint64_t id;        // Unique order identifier
+    double price;       // Quote price (what we posted)
+    double fill_price;  // Actual execution price (may differ due to slippage)
+    int quantity;       // Number of contracts/shares
+    int filled_qty;     // Actual quantity filled
+    bool is_buy;        // true = buy order, false = sell order
 };
 
 // Represents a price level in the order book (for display/analysis)
@@ -56,6 +58,14 @@ public:
     // Buy price = best_bid + (spread * inside_pct / 2)
     // Sell price = best_ask - (spread * inside_pct / 2)
     std::pair<Order, Order> generate_quotes(const MarketDataHandler& market);
+    
+    // Generate quotes with slippage simulation
+    // slippage_bps: slippage in basis points (1 bps = 0.01%)
+    // e.g., slippage_bps=5 means 0.05% adverse price movement
+    std::pair<Order, Order> generate_quotes_with_slippage(
+        const MarketDataHandler& market, 
+        double slippage_bps
+    );
     
 private:
     double inside_pct_;  // Percentage into spread (0.0-1.0), 0.5 = midpoint

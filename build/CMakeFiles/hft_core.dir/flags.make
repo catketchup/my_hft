@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -Dhft_core_EXPORTS
 
-CXX_INCLUDES = -I/home/hongbo/projects/my_Cpp/include -isystem /home/hongbo/tools/anaconda3/lib/python3.12/site-packages/pybind11/include -isystem /home/hongbo/tools/anaconda3/include/python3.12
+CXX_INCLUDES = -I/home/hongbo/projects/my_hft/include -isystem /home/hongbo/tools/anaconda3/lib/python3.12/site-packages/pybind11/include -isystem /home/hongbo/tools/anaconda3/include/python3.12
 
 CXX_FLAGS = -std=gnu++17 -fPIC -fvisibility=hidden -flto=auto -fno-fat-lto-objects
 

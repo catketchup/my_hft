@@ -57,10 +57,10 @@ RM = /home/hongbo/tools/anaconda3/lib/python3.12/site-packages/cmake/data/bin/cm
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hongbo/projects/my_Cpp
+CMAKE_SOURCE_DIR = /home/hongbo/projects/my_hft
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hongbo/projects/my_Cpp/build
+CMAKE_BINARY_DIR = /home/hongbo/projects/my_hft/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_Cpp/build/CMakeFiles /home/hongbo/projects/my_Cpp/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_hft/build/CMakeFiles /home/hongbo/projects/my_hft/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_Cpp/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hongbo/projects/my_hft/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
