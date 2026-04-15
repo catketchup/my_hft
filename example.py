@@ -28,8 +28,8 @@ def main():
     print(f"Mid Price: {market.get_mid_price()}")   # 100.025
     print(f"Spread: {market.get_spread()}")          # 0.05
     
-    # Create market maker with 0.1% spread target, 50 lot size
-    # spread_pct=0.001 means total spread is 0.1% of price
+    # Create market maker quoting 20% inside the spread
+    # Lower inside_pct = closer to market edge = more aggressive = more fills
     mm = hft_core.SimpleMarketMaker(0.2, 50)  # 20% inside the spread
     
     # Generate quotes based on current market

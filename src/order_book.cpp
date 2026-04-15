@@ -42,9 +42,9 @@ std::pair<Order, Order> SimpleMarketMaker::generate_quotes(const MarketDataHandl
     double spread = market.get_spread();
 
     // Place quotes inside the spread
-    // inside_pct=0.0: quotes at market (buy=bid, sell=ask)
+    // inside_pct=0.0: quotes at market prices (buy=bid, sell=ask) — most aggressive, most fills
     // inside_pct=0.5: quotes at mid-price
-    // inside_pct=1.0: quotes at edge of spread (buy=ask, sell=bid) - suicidal!
+    // inside_pct=1.0: quotes crossed (buy=ask, sell=bid) — suicidal
     double inside_amount = spread * inside_pct_;
     
     // Buy above best bid, sell below best ask

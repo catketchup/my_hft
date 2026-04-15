@@ -3,7 +3,7 @@ Order Book Simulator for Market Making Strategy Testing.
 
 Simulates realistic market dynamics including:
 - Mid-price evolution (geometric Brownian motion with optional mean reversion)
-- Probabilistic fill model based on quote aggressiveness
+- Probabilistic fill model based on queue priority (quotes near the edge fill more often)
 - Adverse selection (fills tend to precede price moves against the MM)
 - Inventory, cash, and P&L tracking
 """
@@ -39,7 +39,7 @@ class OrderBookSimulator:
 
     The market maker posts buy and sell quotes inside the spread each step.
     Market orders arrive randomly and may fill the MM's quotes based on
-    how aggressive the quotes are.
+    how close the quotes are to the market edge (queue priority: closer = more fills).
 
     Parameters
     ----------
@@ -55,7 +55,8 @@ class OrderBookSimulator:
         Strength of mean reversion to initial_mid (0 = random walk).
     fill_rate : float
         Base probability of a fill per market order (arrival-adjusted).
-        Higher = more fills. Actual fill probability also depends on inside_pct.
+        Higher = more fills. Actual fill probability also depends on inside_pct
+        (lower inside_pct = closer to edge = higher effective fill rate).
     adverse_selection_bps : float
         After a fill, the mid price shifts against the MM by this many bps.
         Models informed traders confirming the adverse selection problem.
@@ -109,7 +110,10 @@ class OrderBookSimulator:
         """
         Fill probability per market order arrival.
 
-        More aggressive quotes (lower inside_pct) get filled more often.
+        Quotes placed near the edge (lower inside_pct) get filled more often because
+        they have queue priority — market orders hit the best available price first.
+        Quotes near the mid (higher inside_pct) offer better prices to counterparties
+        but are deeper in the book and receive less order flow.
             inside_pct=0.0 (at market): P = fill_rate
             inside_pct=0.5 (at mid):     P = fill_rate * 0.3
             inside_pct=1.0 (crossed):    P ≈ fill_rate * 0.01
@@ -131,7 +135,10 @@ class OrderBookSimulator:
         Parameters
         ----------
         inside_pct : float
-            How deep inside the spread the MM quotes (0=at market, 0.5=at mid, 1=crossed).
+            How deep inside the spread the MM quotes.
+            0=at market edge (most aggressive, most fills),
+            0.5=at mid (moderate),
+            1=crossed (suicidal, almost no fills).
         mm_qty : int
             Order size for each MM quote.
 
@@ -248,7 +255,7 @@ class OrderBookSimulator:
         n_steps : int
             Number of time steps to simulate.
         inside_pct : float
-            MM quote aggressiveness (0=at market, 0.5=at mid, 1=crossed).
+            MM quote depth in spread (0=edge/most aggressive, 0.5=mid, 1=crossed).
         mm_qty : int
             Order size for each MM quote.
 

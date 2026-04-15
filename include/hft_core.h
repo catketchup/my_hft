@@ -49,6 +49,9 @@ private:
 
 // Simple market maker that quotes inside the spread
 // Strategy: post buy inside bid, sell inside ask - compete for order flow
+// inside_pct: how deep into the spread (0.0=edge/most aggressive, 0.5=mid, 1.0=crossed)
+//   - Lower values: closer to market edge, more fills (queue priority), less profit per fill
+//   - Higher values: closer to mid, fewer fills, more profit per fill
 class SimpleMarketMaker {
 public:
     SimpleMarketMaker(double inside_pct, int quantity)
@@ -68,6 +71,6 @@ public:
     );
     
 private:
-    double inside_pct_;  // Percentage into spread (0.0-1.0), 0.5 = midpoint
+    double inside_pct_;  // How deep inside the spread (0.0=edge/most aggressive, 0.5=mid, 1.0=crossed)
     int quantity_;       // Size of each quote
 };

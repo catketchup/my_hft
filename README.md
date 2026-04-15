@@ -101,9 +101,9 @@ Includes visualizations of spread, quote positions, and trading simulations.
 ### SimpleMarketMaker
 - Posts buy/sell quotes inside the spread
 - `inside_pct`: how deep into the spread (0.0-1.0)
-  - 0.0 = at market prices
+  - 0.0 = at market prices (most aggressive, most fills)
   - 0.5 = at mid price
-  - 1.0 = at opposite edges (bad idea)
+  - 1.0 = at opposite edges (suicidal, almost no fills)
 
 ### Order
 - Represents a single order with id, price, quantity, side
